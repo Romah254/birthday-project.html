@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mary!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS with variables and layers */
+        @layer base, components, utilities;
+        
+        :root {
+            --primary: #FF4D4D;
+            --secondary: #00C2A8;
+            --accent: #FFD166;
+            --dark: #1A1A2E;
+            --light: #F5F5F5;
+            --glass: rgba(255, 255, 255, 0.2);
+            --font-main: 'Inter', system-ui, sans-serif;
+            --font-decorative: 'Pacifico', cursive;
+            
+            /* Modern gradient variables */
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--accent), #FF9A5A);
+        }
+
+        /* Base styles with modern reset */
+        @layer base {
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: var(--font-main);
+                background: var(--light);
+                color: var(--dark);
+                min-height: 100svh;
+                display: grid;
+                place-items: center;
+                overflow-x: hidden;
+                line-height: 1.6;
+            }
+
+            img {
+                max-width: 100%;
+                display: block;
+            }
+        }
+
+        /* Component styles */
+        @layer components {
+            .birthday-container {
+                --border-radius: 1.5rem;
+                width: min(90%, 1000px);
+                background: var(--glass);
+                backdrop-filter: blur(10px);
+                border-radius: var(--border-radius);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                border: 1px solid var(--glass);
+                overflow: hidden;
+                position: relative;
+                margin: 2rem;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                will-change: transform;
+            }
+
+            .birthday-container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            .birthday-header {
+                background: var(--gradient-primary);
+                padding: clamp(1.5rem, 5vw, 3rem);
+                text-align: center;
+                color: white;
+                position: relative;
+                overflow: hidden;
+                isolation: isolate;
+            }
+
+            .birthday-header::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 75% 25%, 
+                          rgba(255,255,255,0.2) 0%, 
+                          rgba(255,255,255,0) 50%);
+                z-index: -1;
+            }
+
+            .birthday-content {
+                display: grid;
+                gap: 2rem;
+                padding: clamp(1.5rem, 5vw, 3rem);
+                background: white;
+            }
+
+            @media (min-width: 768px) {
+                .birthday-content {
+                    grid-template-columns: 1fr 2fr;
+                }
+            }
+
+            .photo-section {
+                display: grid;
+                place-items: center;
+            }
+
+            .birthday-photo {
+                --size: min(250px, 80vw);
+                width: var(--size);
+                height: var(--size);
+                border-radius: 50%;
+                object-fit: cover;
+                border: 5px solid white;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                aspect-ratio: 1/1;
+                transition: all 0.3s ease;
+                animation: float 3s ease-in-out infinite;
+            }
+
+            .birthday-photo:hover {
+                transform: scale(1.05);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            }
+
+            .message-section {
+                display: grid;
+                gap: 1.5rem;
+            }
+
+            .birthday-message {
+                font-size: clamp(1rem, 3vw, 1.1rem);
+                color: #555;
+            }
+
+            .birthday-wish {
+                font-family: var(--font-decorative);
+                font-size: clamp(1.5rem, 5vw, 2.5rem);
+                color: var(--primary);
+                background: var(--gradient-accent);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin: 1rem 0;
+                animation: pulse 2s infinite;
+            }
+
+            .birthday-footer {
+                text-align: center;
+                padding: 1.5rem;
+                font-size: 0.9rem;
+                color: #888;
+                background: var(--light);
+                border-top: 1px solid rgba(0,0,0,0.05);
+            }
+
+            /* Modern button */
+            .birthday-button {
+                background: var(--gradient-primary);
+                color: white;
+                border: none;
+                padding: 0.8rem 2rem;
+                border-radius: 100vmax;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                width: fit-content;
+                justify-self: center;
+                position: relative;
+                overflow: hidden;
+                isolation: isolate;
+            }
+
+            .birthday-button::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(rgba(255,255,255,0.2), transparent);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: -1;
+            }
+
+            .birthday-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            }
+
+            .birthday-button:hover::before {
+                opacity: 1;
+            }
+
+            /* Social share */
+            .social-share {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: grid;
+                place-items: center;
+                background: var(--light);
+                color: var(--dark);
+                transition: all 0.3s ease;
+            }
+
+            .social-icon:hover {
+                transform: translateY(-3px);
+                background: var(--primary);
+                color: white;
+            }
+
+            /* Floating balloons */
+            .balloon {
+                position: absolute;
+                width: 50px;
+                height: 60px;
+                border-radius: 50%;
+                animation: floatUp 10s linear infinite;
+                opacity: 0.8;
+                z-index: -1;
+            }
+
+            .balloon::after {
+                content: "";
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 2px;
+                height: 15px;
+                background: rgba(0,0,0,0.2);
+            }
+        }
+
+        /* Utility classes */
+        @layer utilities {
+            .text-center {
+                text-align: center;
+            }
+
+            .text-balance {
+                text-wrap: balance;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Modern typography */
+        h1 {
+                font-family: var(--font-decorative);
+                font-size: clamp(2.5rem, 8vw, 4.5rem);
+                margin-bottom: 0.5rem;
+                position: relative;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+                animation: fadeIn 1s ease-in-out;
+                line-height: 1.2;
+            }
+
+            h2 {
+                font-weight: 300;
+                font-size: clamp(1rem, 4vw, 1.5rem);
+                opacity: 0.9;
+                font-variation-settings: "wght" 300;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Modern scrollbar (for browsers that support it) */
+            @supports (scrollbar-width: thin) {
+                * {
+                    scrollbar-width: thin;
+                    scrollbar-color: var(--primary) var(--light);
+                }
+            }
+
+            /* View transitions API (experimental) */
+            @supports (view-transition-name: none) {
+                .birthday-photo {
+                    view-transition-name: birthday-photo;
+                }
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="birthday-container">
+        <div class="birthday-header">
+            <h1>Happy Birthday Mary!</h1>
+            <h2>Wishing you the most amazing day!</h2>
+        </div>
+
+        <div class="birthday-content">
+            <div class="photo-section">
+                <!-- Replace with Mary's actual photo -->
+                <img src="WhatsApp Image 2025-04-19 at 09.36.27_c55bb676.jpg" alt="Mary" class="birthday-photo">
+            </div>
+
+            <div class="message-section">
+                <p class="birthday-message text-balance">
+                    Dear Mary, on your special day, I want you to know how much you mean to me. 
+                    You're not just my sister, but also my best friend and confidante. 
+                    Your kindness, strength, and beautiful spirit inspire me every day.
+                </p>
+                
+                <div class="birthday-wish">May all your dreams come true!</div>
+                
+                <p class="birthday-message text-balance">
+                    Wishing you a year filled with joy, laughter, love, and all the happiness you deserve. 
+                    Thank you for being you and for all the wonderful memories we've shared.
+                </p>
+                
+                <button class="birthday-button" id="confetti-btn">
+                    <i class="fas fa-sparkles"></i> Celebrate!
+                </button>
+
+                <div class="social-share">
+                    <a href="#" class="social-icon" aria-label="Share on Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Share on WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="birthday-footer">
+            Made with <i class="fas fa-heart" style="color: var(--primary)"></i> for Mary's birthday
+        </div>
+    </div>
+
+    <!-- Balloons -->
+    <div id="balloons-container"></div>
+
+    <!-- Confetti container -->
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <script type="module">
+        // Modern JavaScript with modules
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create balloons
+            const balloonsContainer = document.getElementById('balloons-container');
+            const colors = ['#FF4D4D', '#00C2A8', '#FFD166', '#FF9A5A', '#A569BD'];
+            
+            for (let i = 0; i < 15; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                balloon.style.animationDelay = Math.random() * 5 + 's';
+                balloon.style.width = (Math.random() * 30 + 30) + 'px';
+                balloon.style.height = (Math.random() * 40 + 40) + 'px';
+                balloonsContainer.appendChild(balloon);
+            }
+
+            // Confetti effect with modern JS
+            const confettiBtn = document.getElementById('confetti-btn');
+            confettiBtn.addEventListener('click', () => {
+                createConfetti();
+                
+                // Haptic feedback (if supported)
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([50, 50, 50]);
+                }
+                
+                // Web Share API (if available)
+                if (navigator.share) {
+                    navigator.share({
+                        title: "Mary's Birthday",
+                        text: "Help me celebrate Mary's birthday!",
+                        url: window.location.href
+                    }).catch(err => {
+                        console.log('Sharing cancelled', err);
+                    });
+                }
+            });
+
+            function createConfetti() {
+                const container = document.getElementById('confetti-container');
+                container.innerHTML = '';
+                
+                for (let i = 0; i < 150; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = getRandomColor();
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 5 + 's';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    container.appendChild(confetti);
+                }
+            }
+
+            function getRandomColor() {
+                const colors = ['#FF4D4D', '#00C2A8', '#FFD166', '#FF9A5A', '#A569BD'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+        });
+
+        // Service worker registration for PWA capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
